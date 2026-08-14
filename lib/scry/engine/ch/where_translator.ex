@@ -189,18 +189,21 @@ defmodule Scry.Engine.Ch.WhereTranslator do
   @spec identifier?(term()) :: boolean()
   def identifier?(field), do: is_binary(field) and Regex.match?(@identifier, field)
 
-  # `{value, ch_type}` -- `ch_type` is the ClickHouse type name embedded
-  # directly in that value's own `{$N:ch_type}` placeholder. Integers
-  # always bind as `Int64` (ClickHouse's own cross-width numeric
-  # comparison against a narrower real column, e.g. `Int32`, confirmed
-  # directly to widen correctly, the same "found real, not assumed"
-  # confirmation `scry_engine_duckdbex`'s own moduledoc documents for
-  # its own driver). A `DateTime`/`NaiveDateTime` literal always binds
-  # as `DateTime64(6)` (microsecond precision) regardless of the
-  # value's own actual precision or the compared column's -- confirmed
-  # directly: a `DateTime64(6)`-typed parameter compares correctly
-  # against an ordinary second-precision `DateTime` column, so there's
-  # no need to introspect either side's real precision first.
+  @doc """
+  `{:ok, value, ch_type}` -- `ch_type` is the ClickHouse type name
+  embedded directly in that value's own `{$N:ch_type}` placeholder.
+  Integers always bind as `Int64` (ClickHouse's own cross-width numeric
+  comparison against a narrower real column, e.g. `Int32`, confirmed
+  directly to widen correctly, the same "found real, not assumed"
+  confirmation `scry_engine_duckdbex`'s own moduledoc documents for its
+  own driver). A `DateTime`/`NaiveDateTime` literal always binds as
+  `DateTime64(6)` (microsecond precision) regardless of the value's own
+  actual precision or the compared column's -- confirmed directly: a
+  `DateTime64(6)`-typed parameter compares correctly against an
+  ordinary second-precision `DateTime` column, so there's no need to
+  introspect either side's real precision first. `:error` for a value
+  with no translatable ClickHouse type.
+  """
   @spec bind_value(term()) :: {:ok, term(), String.t()} | :error
   def bind_value(%DateTime{} = value), do: {:ok, value, "DateTime64(6)"}
   def bind_value(%NaiveDateTime{} = value), do: {:ok, value, "DateTime64(6)"}

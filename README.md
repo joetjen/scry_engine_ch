@@ -9,7 +9,7 @@ one native SQL statement, all or nothing: either the whole query is
 genuinely correct as native SQL, or `execute/3` declines it with a
 clean `{:error, {:unsupported, detail}}` and no attempt is made.
 
-Closes the validation lang_spec.md §12 already commits to (the
+Closes a validation gap already committed to (the
 time-series kind, framed around "the RabbitMQ/ClickHouse use case") --
 none of the engines built before this one (in-memory, ETS, SQLite,
 PostgreSQL, DuckDB) exercise a genuine time-series-oriented product.
@@ -19,10 +19,8 @@ package needs no time-series-specific code of its own -- being a
 correct, general `Scry.Core.EngineBehaviour` implementation already
 closes the gap.
 
-Source: <https://github.com/joetjen/scry_engine_ch>. Specs live in the
-separate [`scry`](https://github.com/joetjen/scry) repository; the
-behaviour this implements lives in
-[`scry_core`](https://github.com/joetjen/scry_core).
+Source: <https://github.com/joetjen/scry_engine_ch>. The behaviour this
+implements lives in [`scry_core`](https://github.com/joetjen/scry_core).
 
 ## Usage
 

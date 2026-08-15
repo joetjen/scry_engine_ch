@@ -7,8 +7,8 @@ defmodule Scry.Engine.Ch do
   `DISTINCT`/`LIMIT`/`OFFSET`/projection -- into one native SQL
   statement via `Scry.Engine.Ch.SqlCompiler`, all or nothing, the same
   posture `scry_engine_exqlite`/`scry_engine_duckdbex` already
-  established. Closes the validation lang_spec.md §12 already commits
-  to (the time-series kind, framed around "the RabbitMQ/ClickHouse use
+  established. Closes a validation gap already committed to (the
+  time-series kind, framed around "the RabbitMQ/ClickHouse use
   case") -- none of the engines built before this one (in-memory, ETS,
   SQLite, PostgreSQL, DuckDB) exercise a genuine time-series-oriented
   product; `scry_time_series`'s own `LAST`-lowering pass already

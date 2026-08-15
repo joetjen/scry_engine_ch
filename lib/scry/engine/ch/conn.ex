@@ -2,8 +2,8 @@ defmodule Scry.Engine.Ch.Conn do
   @moduledoc """
   Wraps a `ch` connection pid -- opened once via `open/1` and meant to
   be reused across many `Scry.Engine.Ch.execute/3` calls, matching the
-  connection/config struct every real adapter exposes (impl_spec.md
-  §2). Unlike `Scry.Engine.Exqlite.Conn`/`Scry.Engine.Duckdbex.Conn`
+  connection/config struct every real adapter exposes. Unlike
+  `Scry.Engine.Exqlite.Conn`/`Scry.Engine.Duckdbex.Conn`
   (a raw native handle, no process involved), `ch` is `DBConnection`-
   based -- `Ch.start_link/1` always starts a real, linked pool process
   (default `pool_size: 1`), never a bare handle. `open/1` calls it
